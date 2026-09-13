@@ -1,0 +1,339 @@
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로또 번호 추천</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .description {
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        .number-container {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+
+        .number {
+            width: 45px;
+            height: 45px;
+            border: none;
+            border-radius: 50%;
+            background: #eee;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .number:hover {
+            transform: scale(1.1);
+            background: #ddd;
+        }
+
+        .number.selected {
+            background: #667eea;
+            color: white;
+        }
+
+        .selected-title {
+            font-weight: bold;
+            color: #555;
+        }
+
+        #selectedNumbers {
+            min-height: 35px;
+            margin: 10px 0 20px;
+            font-size: 18px;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .recommend-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #667eea;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .recommend-btn:hover {
+            background: #5568d8;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 15px;
+        }
+
+        .result h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .lotto-numbers {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .lotto-ball {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #667eea;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .reset-btn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+        }
+
+        @media (max-width: 500px) {
+            .number-container {
+                grid-template-columns: repeat(6, 1fr);
+            }
+
+            .number {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>🎱 로또 번호 추천</h1>
+
+        <p class="description">
+            원하는 번호를 먼저 선택해보세요!
+        </p>
+
+        <!-- 번호 버튼 -->
+        <div class="number-container" id="numberContainer"></div>
+
+        <div class="selected-title">
+            선택한 번호
+        </div>
+
+        <div id="selectedNumbers">
+            선택한 번호가 없습니다.
+        </div>
+
+        <button class="recommend-btn" onclick="recommendNumbers()">
+            🎯 로또 번호 추천
+        </button>
+
+        <div class="result">
+            <h2>추천 번호</h2>
+
+            <div class="lotto-numbers" id="resultNumbers">
+                <span>버튼을 눌러주세요!</span>
+            </div>
+
+            <button class="reset-btn" onclick="resetNumbers()">
+                🔄 초기화
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        // 선택된 번호 저장
+        let selectedNumbers = [];
+
+        const numberContainer =
+            document.getElementById("numberContainer");
+
+        const selectedNumbersElement =
+            document.getElementById("selectedNumbers");
+
+        const resultNumbers =
+            document.getElementById("resultNumbers");
+
+
+        // 1~45 번호 버튼 만들기
+        for (let i = 1; i <= 45; i++) {
+
+            const button = document.createElement("button");
+
+            button.classList.add("number");
+            button.textContent = i;
+
+            button.onclick = function () {
+                selectNumber(i, button);
+            };
+
+            numberContainer.appendChild(button);
+        }
+
+
+        // 번호 선택
+        function selectNumber(number, button) {
+
+            // 이미 선택한 번호라면 선택 취소
+            if (selectedNumbers.includes(number)) {
+
+                selectedNumbers =
+                    selectedNumbers.filter(n => n !== number);
+
+                button.classList.remove("selected");
+
+            } else {
+
+                // 최대 6개까지만 선택
+                if (selectedNumbers.length >= 6) {
+                    alert("번호는 최대 6개까지 선택할 수 있습니다.");
+                    return;
+                }
+
+                selectedNumbers.push(number);
+
+                button.classList.add("selected");
+            }
+
+            updateSelectedNumbers();
+        }
+
+
+        // 선택한 번호 화면 업데이트
+        function updateSelectedNumbers() {
+
+            if (selectedNumbers.length === 0) {
+
+                selectedNumbersElement.textContent =
+                    "선택한 번호가 없습니다.";
+
+            } else {
+
+                selectedNumbersElement.textContent =
+                    selectedNumbers
+                        .sort((a, b) => a - b)
+                        .join(" · ");
+            }
+        }
+
+
+        // 로또 번호 추천
+        function recommendNumbers() {
+
+            let numbers = [...selectedNumbers];
+
+            // 선택하지 않은 번호 목록 만들기
+            let remainingNumbers = [];
+
+            for (let i = 1; i <= 45; i++) {
+
+                if (!numbers.includes(i)) {
+                    remainingNumbers.push(i);
+                }
+            }
+
+
+            // 랜덤으로 섞기
+            remainingNumbers.sort(() => Math.random() - 0.5);
+
+
+            // 6개가 될 때까지 추가
+            while (numbers.length < 6) {
+
+                numbers.push(remainingNumbers.shift());
+            }
+
+
+            // 오름차순 정렬
+            numbers.sort((a, b) => a - b);
+
+
+            // 결과 출력
+            resultNumbers.innerHTML = "";
+
+            numbers.forEach(number => {
+
+                const ball =
+                    document.createElement("div");
+
+                ball.classList.add("lotto-ball");
+
+                ball.textContent = number;
+
+                resultNumbers.appendChild(ball);
+            });
+        }
+
+
+        // 초기화
+        function resetNumbers() {
+
+            selectedNumbers = [];
+
+            document
+                .querySelectorAll(".number")
+                .forEach(button => {
+                    button.classList.remove("selected");
+                });
+
+            updateSelectedNumbers();
+
+            resultNumbers.innerHTML =
+                "<span>버튼을 눌러주세요!</span>";
+        }
+    </script>
+
+</body>
+</html>
+```
