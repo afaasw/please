@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="시간의 소중함과 포기하지 않는 마음을 전하는 공룡 테마의 영감 홈페이지" />
+  <title>KEEP MOVING | 시간은 지금이다</title>
+  <style>
+    :root {
+      --ink: #17231f;
+      --muted: #60716a;
+      --cream: #f4f0e7;
+      --paper: #fffdf8;
+      --orange: #f47b42;
+      --orange-dark: #d95b2a;
+      --green: #264e40;
+      --line: rgba(38, 78, 64, .15);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--cream);
+      font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(1120px, calc(100% - 48px)); margin: 0 auto; }
+
+    header {
+      position: absolute;
+      z-index: 5;
+      top: 0; left: 0; right: 0;
+      padding: 28px 0;
+      color: #fff;
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; }
+    .brand {
+      display: flex; align-items: center; gap: 11px;
+      font-size: .78rem; font-weight: 800; letter-spacing: .18em;
+    }
+    .brand-mark {
+      display: grid; place-items: center;
+      width: 34px; height: 34px; border-radius: 50%;
+      color: var(--green); background: var(--orange);
+      font-size: 1.15rem;
+    }
+    nav { display: flex; gap: 30px; font-size: .78rem; font-weight: 700; letter-spacing: .08em; opacity: .85; }
+    nav a:hover { color: #ffc18b; }
+
+    .hero {
+      position: relative; overflow: hidden;
+      min-height: 720px; color: #fff;
+      background: #102f2a;
+      isolation: isolate;
+    }
+    .hero::before {
+      position: absolute; inset: 0; z-index: -2;
+      content: "";
+      background:
+        radial-gradient(circle at 70% 25%, rgba(243, 145, 83, .35), transparent 26%),
+        linear-gradient(120deg, #102d29 0%, #1b4238 52%, #476552 100%);
+    }
+    .hero::after {
+      position: absolute; inset: auto 0 0; z-index: -1;
+      height: 34%; content: "";
+      background: linear-gradient(transparent, rgba(7, 20, 17, .7));
+    }
+    .stars { position: absolute; inset: 0; opacity: .7; background-image: radial-gradient(#fff 1px, transparent 1.5px); background-size: 97px 83px; }
+    .hero-inner { position: relative; display: grid; grid-template-columns: 1.06fr .94fr; align-items: center; min-height: 720px; padding-top: 52px; }
+    .eyebrow { margin: 0 0 18px; color: #ffb37c; font-size: .72rem; font-weight: 800; letter-spacing: .24em; }
+    h1 { max-width: 620px; margin: 0; font-size: clamp(3.6rem, 8vw, 7.2rem); line-height: .92; letter-spacing: -.08em; }
+    .hero-copy { max-width: 455px; margin: 26px 0 35px; color: #c9d7ce; font-size: 1rem; }
+    .cta { display: inline-flex; align-items: center; gap: 16px; padding: 15px 21px; border-radius: 100px; color: var(--ink); background: var(--orange); font-size: .82rem; font-weight: 800; transition: transform .2s, background .2s; }
+    .cta:hover { transform: translateY(-3px); background: #ff9a61; }
+    .cta span { display: grid; place-items: center; width: 23px; height: 23px; border-radius: 50%; background: rgba(23, 35, 31, .14); }
+
+    .dino-wrap { align-self: end; justify-self: end; width: min(500px, 100%); margin-bottom: -14px; }
+    .dino-wrap svg { display: block; width: 100%; height: auto; filter: drop-shadow(0 25px 18px rgba(0,0,0,.22)); }
+    .hero-note { position: absolute; bottom: 35px; left: 0; color: rgba(255,255,255,.55); font-size: .72rem; letter-spacing: .08em; }
+
+    .intro { padding: 105px 0 93px; background: var(--paper); }
+    .intro-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 90px; }
+    .section-label { margin: 0 0 18px; color: var(--orange-dark); font-size: .7rem; font-weight: 900; letter-spacing: .2em; }
+    h2 { margin: 0; font-size: clamp(2.2rem, 5vw, 4.2rem); line-height: 1.03; letter-spacing: -.07em; }
+    .intro-text { margin: 6px 0 0; color: var(--muted); font-size: 1.08rem; }
+    .intro-text strong { color: var(--green); }
+
+    .quotes { padding: 100px 0; background: var(--cream); }
+    .quote-head { display: flex; align-items: end; justify-content: space-between; margin-bottom: 48px; }
+    .quote-head p { max-width: 270px; margin: 0; color: var(--muted); font-size: .9rem; }
+    .quote-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .quote-card { position: relative; min-height: 270px; padding: 34px; border: 1px solid var(--line); background: var(--paper); }
+    .quote-card:first-child { color: #fff; background: var(--green); }
+    .quote-mark { color: var(--orange); font-family: Georgia, serif; font-size: 4rem; line-height: .55; }
+    blockquote { margin: 29px 0 30px; font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 800; line-height: 1.35; letter-spacing: -.05em; }
+    .quote-card cite { color: var(--muted); font-size: .77rem; font-style: normal; font-weight: 700; }
+    .quote-card:first-child cite { color: #b4cec0; }
+
+    .closing { padding: 110px 0; color: #fff; background: var(--orange); }
+    .closing-inner { display: flex; align-items: center; justify-content: space-between; gap: 50px; }
+    .closing h2 { max-width: 670px; }
+    .closing .cta { flex-shrink: 0; background: var(--green); color: #fff; }
+    footer { padding: 24px 0; color: #83968d; background: var(--ink); font-size: .72rem; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 20px; }
+
+    @media (max-width: 760px) {
+      .wrap { width: min(100% - 34px, 600px); }
+      header { padding: 19px 0; }
+      nav { display: none; }
+      .hero, .hero-inner { min-height: 730px; }
+      .hero-inner { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding-top: 70px; }
+      .dino-wrap { width: min(440px, 100%); margin: -4px auto 0; }
+      .hero-note { bottom: 22px; }
+      .intro, .quotes, .closing { padding: 72px 0; }
+      .intro-grid { grid-template-columns: 1fr; gap: 32px; }
+      .quote-head, .closing-inner { display: block; }
+      .quote-head p { margin-top: 20px; }
+      .quote-grid { grid-template-columns: 1fr; margin-top: 34px; }
+      .closing .cta { margin-top: 30px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#"><span class="brand-mark">◒</span> KEEP MOVING</a>
+      <nav aria-label="주요 메뉴">
+        <a href="#meaning">WHY TIME</a>
+        <a href="#quotes">QUOTES</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="stars" aria-hidden="true"></div>
+      <div class="wrap hero-inner">
+        <div>
+          <p class="eyebrow">A LITTLE REMINDER FOR TODAY</p>
+          <h1 id="hero-title">시간은<br /><em>지금</em>이다.</h1>
+          <p class="hero-copy">거대한 발자국도 결국 한 걸음에서 시작됩니다. 오늘이라는 선물을, 망설임보다 용기에 사용하세요.</p>
+          <a class="cta" href="#quotes">오늘의 문장 읽기 <span>↓</span></a>
+        </div>
+        <div class="dino-wrap" aria-label="용기를 상징하는 귀여운 초식 공룡 일러스트" role="img">
+          <svg viewBox="0 0 520 420" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <ellipse cx="290" cy="393" rx="174" ry="15" fill="#0a211d" opacity=".45"/>
+            <path d="M102 312C60 292 45 246 61 202c12-34 44-58 84-60 21-2 45 2 70 10 22-35 57-55 98-55 81 0 129 63 114 131-9 42-45 77-90 91-36 11-78 5-113-13-38 30-81 29-122 6z" fill="#79a878"/>
+            <path d="M116 151C73 142 48 111 57 77c8-28 36-41 62-29 18 8 24 26 20 43 31-20 68-17 86 2 15 17 11 39-8 51-25 16-64 16-101 7z" fill="#79a878"/>
+            <path d="M61 202c-7 28-4 58 16 84l-28-13c-19-28-20-64-2-94 11-17 25-28 42-33-14 15-23 34-28 56z" fill="#5f8e6c"/>
+            <path d="M108 294c-16 25-20 51-15 78h36c-3-22 4-43 25-67zM290 312c-5 23-3 42 6 60h37c-11-22-9-44 1-69z" fill="#416c52"/>
+            <path d="M300 99c27-28 70-39 100-22 18 10 28 27 26 45-3 26-29 40-51 32-13-5-21-17-21-31-22 13-45 10-54-4-6-9-6-14 0-20z" fill="#79a878"/>
+            <path d="M323 87c13-20 31-34 56-37 14-2 30 1 40 9-26-2-49 10-63 30z" fill="#5f8e6c"/>
+            <circle cx="378" cy="110" r="5" fill="#17231f"/>
+            <circle cx="380" cy="108" r="1.7" fill="#fff"/>
+            <path d="M401 128c15 7 27 5 38-3-8 18-27 24-43 15" fill="#d95b2a"/>
+            <path d="M407 140c-6 17-5 32 0 43" fill="none" stroke="#416c52" stroke-width="7" stroke-linecap="round"/>
+            <path d="M222 105l-17-34 31 18 9-41 16 47" fill="#f47b42"/>
+            <path d="M92 114c-14-12-17-28-9-42M112 119c-4-17 1-31 13-40" fill="none" stroke="#f4c44d" stroke-width="6" stroke-linecap="round"/>
+            <path d="M162 181c14 10 26 10 39 0M180 207c11 8 23 8 34 0" fill="none" stroke="#416c52" stroke-width="6" stroke-linecap="round"/>
+            <path d="M464 208c16-8 29-21 34-38" fill="none" stroke="#79a878" stroke-width="16" stroke-linecap="round"/>
+            <path d="M471 174l23-16M476 183l26-5" stroke="#f47b42" stroke-width="6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <p class="hero-note">EVERY DAY IS A NEW FOOTPRINT · 01</p>
+      </div>
+    </section>
+
+    <section class="intro" id="meaning" aria-labelledby="meaning-title">
+      <div class="wrap intro-grid">
+        <div>
+          <p class="section-label">01 — THE VALUE OF NOW</p>
+          <h2 id="meaning-title">시간은<br />기다려주지 않지만,<br /><em>기회는 오늘도 옵니다.</em></h2>
+        </div>
+        <p class="intro-text">우리는 종종 완벽한 때를 기다립니다. 하지만 시간은 멈춰서 준비할 때가 아니라, <strong>작게라도 시작할 때</strong> 가장 빛납니다. 어제의 후회와 내일의 걱정 사이에서, 지금의 한 걸음을 선택하세요.</p>
+      </div>
+    </section>
+
+    <section class="quotes" id="quotes" aria-labelledby="quotes-title">
+      <div class="wrap">
+        <div class="quote-head">
+          <div>
+            <p class="section-label">02 — WORDS TO KEEP</p>
+            <h2 id="quotes-title">오늘의 발걸음에<br />힘을 더하는 말</h2>
+          </div>
+          <p>넘어져도 괜찮아요.<br />다시 일어날 이유는 언제나 충분하니까요.</p>
+        </div>
+        <div class="quote-grid">
+          <article class="quote-card">
+            <div class="quote-mark">“</div>
+            <blockquote>미래는 현재 우리가 무엇을 하는가에 달려 있다.</blockquote>
+            <cite>— 마하트마 간디</cite>
+          </article>
+          <article class="quote-card">
+            <div class="quote-mark">“</div>
+            <blockquote>성공은 넘어지는 것이 아니라, 넘어질 때마다 일어나는 것이다.</blockquote>
+            <cite>— 넬슨 만델라</cite>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing">
+      <div class="wrap closing-inner">
+        <h2>느리더라도 괜찮습니다.<br />절대, 포기하지 마세요.</h2>
+        <a class="cta" href="#hero-title">다시 시작하기 <span>↑</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <span>KEEP MOVING © 2026</span>
+      <span>ONE STEP AT A TIME</span>
+    </div>
+  </footer>
+</body>
+</html>
