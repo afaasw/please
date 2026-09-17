@@ -121,6 +121,19 @@
     h2 { margin: 0; font-size: clamp(2.2rem, 5vw, 4.2rem); line-height: 1.03; letter-spacing: -.07em; }
     .intro-text { margin: 6px 0 0; color: var(--muted); font-size: 1.08rem; }
     .intro-text strong { color: var(--green); }
+    .info-section { padding: 100px 0; background: var(--paper); }
+    .info-head { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 42px; }
+    .info-head p:last-child { max-width: 330px; margin: 0; color: var(--muted); font-size: .92rem; }
+    .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .info-card { padding: 28px; border: 1px solid var(--line); background: var(--cream); }
+    .info-card strong { display: block; margin-bottom: 12px; color: var(--green); font-size: 1.15rem; }
+    .info-card p { margin: 0; color: var(--muted); font-size: .9rem; }
+    .faq-section { padding: 100px 0; background: var(--cream); }
+    .faq-list { max-width: 820px; margin-top: 38px; border-top: 1px solid var(--line); }
+    .faq-list details { padding: 22px 0; border-bottom: 1px solid var(--line); }
+    .faq-list summary { cursor: pointer; color: var(--green); font-weight: 800; }
+    .faq-list p { margin: 14px 0 0; color: var(--muted); font-size: .9rem; }
+    .notice { margin-top: 28px; padding: 18px 20px; border-left: 3px solid var(--orange); color: var(--muted); background: #fff8ee; font-size: .82rem; }
 
     .quotes { padding: 100px 0; background: var(--cream); }
     .quote-head { display: flex; align-items: end; justify-content: space-between; margin-bottom: 48px; }
@@ -143,6 +156,8 @@
     #disqus_thread { max-width: 760px; }
     footer { padding: 24px 0; color: #83968d; background: var(--ink); font-size: .72rem; }
     .footer-inner { display: flex; justify-content: space-between; gap: 20px; }
+    .footer-links { display: flex; gap: 18px; }
+    .footer-links a:hover { color: #fff; }
 
     @media (max-width: 760px) {
       .wrap { width: min(100% - 34px, 600px); }
@@ -162,7 +177,13 @@
       .quote-head, .closing-inner { display: block; }
       .quote-head p { margin-top: 20px; }
       .quote-grid { grid-template-columns: 1fr; margin-top: 34px; }
+      .info-section, .faq-section { padding: 72px 0; }
+      .info-head { display: block; }
+      .info-head p:last-child { margin-top: 18px; }
+      .info-grid { grid-template-columns: 1fr; }
       .closing .cta { margin-top: 30px; }
+      .footer-inner { display: block; }
+      .footer-links { margin-top: 14px; }
     }
   </style>
 </head>
@@ -173,6 +194,7 @@
       <nav aria-label="주요 메뉴">
         <a href="#test">TEST</a>
         <a href="#meaning">ABOUT</a>
+        <a href="#guide">GUIDE</a>
       </nav>
     </div>
   </header>
@@ -241,7 +263,7 @@
       <div class="wrap">
         <div class="quote-head">
           <div>
-            <p class="section-label">03 — ANIMAL VIBES</p>
+            <p class="section-label">04 — ANIMAL VIBES</p>
             <h2 id="quotes-title">강아지상과<br />고양이상의 매력</h2>
           </div>
             <p>당신은 어떤 매력을<br />가지고 있나요?</p>
@@ -261,6 +283,58 @@
       </div>
     </section>
 
+    <section class="info-section" id="guide" aria-labelledby="guide-title">
+      <div class="wrap">
+        <div class="info-head">
+          <div>
+            <p class="section-label">05 — HOW TO USE THE TEST</p>
+            <h2 id="guide-title">더 정확하고<br /><em>즐겁게 이용하는 법</em></h2>
+          </div>
+          <p>좋은 사진을 준비하면 모델의 결과를 더 안정적으로 확인할 수 있어요. 아래 안내를 먼저 읽어보세요.</p>
+        </div>
+        <div class="info-grid">
+          <article class="info-card">
+            <strong>01. 정면 사진 준비</strong>
+            <p>얼굴이 화면 중앙에 오고 눈·코·입이 잘 보이는 밝은 사진을 사용하세요. 여러 사람이 있는 사진은 피해주세요.</p>
+          </article>
+          <article class="info-card">
+            <strong>02. 결과는 참고용</strong>
+            <p>AI 결과는 학습 데이터와 사진 조건에 따라 달라질 수 있습니다. 실제 외모나 성격을 판단하는 진단 도구가 아닙니다.</p>
+          </article>
+          <article class="info-card">
+            <strong>03. 나만의 해석</strong>
+            <p>강아지상과 고양이상은 매력을 재미있게 표현하는 분류입니다. 어떤 결과든 당신의 개성과 매력을 대신할 수는 없어요.</p>
+          </article>
+        </div>
+        <p class="notice">이 페이지의 이미지 분석은 브라우저에서 실행됩니다. 사진을 저장하거나 서버로 전송하지 않도록 설계했지만, 카메라 및 외부 라이브러리 사용 전 브라우저 권한을 확인해주세요.</p>
+      </div>
+    </section>
+
+    <section class="faq-section" id="faq" aria-labelledby="faq-title">
+      <div class="wrap">
+        <p class="section-label">06 — QUESTIONS & ANSWERS</p>
+        <h2 id="faq-title">자주 묻는 질문</h2>
+        <div class="faq-list">
+          <details>
+            <summary>사진이 서버에 저장되나요?</summary>
+            <p>이 페이지의 분석 코드는 업로드한 이미지를 별도 서버에 저장하는 기능을 제공하지 않습니다. 다만 브라우저, CDN, 광고 및 댓글 서비스는 각자의 개인정보처리방침을 적용하므로 해당 서비스의 안내도 확인해주세요.</p>
+          </details>
+          <details>
+            <summary>결과가 매번 달라지는 이유는 무엇인가요?</summary>
+            <p>조명, 얼굴 각도, 표정, 배경과 이미지 품질에 따라 모델의 예측 확률이 달라질 수 있습니다. 같은 사진으로 확인하면 조건을 통일할 수 있습니다.</p>
+          </details>
+          <details>
+            <summary>강아지상·고양이상은 실제 진단인가요?</summary>
+            <p>아니요. 이 테스트는 엔터테인먼트 목적의 이미지 분류 예시입니다. 건강, 성격, 신원 또는 사람의 가치를 판단하지 않으며 결과를 중요한 의사결정에 사용하지 마세요.</p>
+          </details>
+          <details>
+            <summary>카메라가 작동하지 않으면 어떻게 하나요?</summary>
+            <p>HTTPS 환경인지 확인하고 브라우저의 카메라 권한을 허용해주세요. 카메라를 사용할 수 없다면 사진 업로드 기능을 이용할 수 있습니다.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
     <section class="closing">
       <div class="wrap closing-inner">
         <h2>결과가 어떻든 괜찮아요.<br />당신은 충분히 매력적이니까요.</h2>
@@ -271,7 +345,7 @@
     <section class="comments" aria-labelledby="comments-title">
       <div class="wrap">
         <div class="comments-head">
-          <p class="section-label">03 — KEEP THE CONVERSATION GOING</p>
+          <p class="section-label">07 — KEEP THE CONVERSATION GOING</p>
           <h2 id="comments-title">당신의 이야기도<br />들려주세요.</h2>
         </div>
         <div id="disqus_thread"></div>
@@ -419,7 +493,11 @@
   <footer>
     <div class="wrap footer-inner">
       <span>ANIMAL FACE © 2026</span>
-      <span>JUST FOR FUN</span>
+      <div class="footer-links">
+        <a href="#guide">이용 안내</a>
+        <a href="#faq">FAQ</a>
+        <a href="#comments-title">댓글</a>
+      </div>
     </div>
   </footer>
 </body>
