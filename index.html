@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="시간의 소중함과 포기하지 않는 마음을 전하는 공룡 테마의 영감 홈페이지" />
-  <title>KEEP MOVING | 시간은 지금이다</title>
+  <meta name="description" content="강아지상인지 고양이상인지 AI로 알아보는 동물상 테스트" />
+  <title>ANIMAL FACE | 나는 무슨 동물상?</title>
   <style>
     :root {
       --ink: #17231f;
@@ -78,7 +78,38 @@
     .cta span { display: grid; place-items: center; width: 23px; height: 23px; border-radius: 50%; background: rgba(23, 35, 31, .14); }
 
     .dino-wrap { align-self: end; justify-self: end; width: min(500px, 100%); margin-bottom: -14px; }
-    .dino-wrap svg { display: block; width: 100%; height: auto; filter: drop-shadow(0 25px 18px rgba(0,0,0,.22)); }
+    .animal-orbit { position: relative; display: grid; place-items: center; width: 390px; height: 390px; margin-left: auto; border: 1px solid rgba(255,255,255,.22); border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,.16), transparent 65%); box-shadow: 0 25px 50px rgba(0,0,0,.16); }
+    .animal-orbit::before, .animal-orbit::after { position: absolute; content: ""; border: 1px solid rgba(255,255,255,.14); border-radius: 50%; }
+    .animal-orbit::before { inset: 25px; }
+    .animal-orbit::after { inset: 58px; }
+    .animal-face { position: relative; z-index: 1; display: grid; place-items: center; width: 185px; height: 185px; border-radius: 50%; font-size: 7rem; background: #fff6e9; box-shadow: 0 18px 25px rgba(0,0,0,.2); transform: rotate(-7deg); }
+    .animal-face::after { position: absolute; right: -42px; bottom: 7px; content: "🐾"; font-size: 3rem; transform: rotate(18deg); }
+    .model-section { padding: 108px 0; background: var(--cream); }
+    .model-layout { display: grid; grid-template-columns: .8fr 1.2fr; gap: 70px; align-items: start; }
+    .model-copy h2 { max-width: 440px; }
+    .model-copy p:not(.section-label) { max-width: 390px; margin: 24px 0 0; color: var(--muted); }
+    .model-card { padding: 28px; border: 1px solid var(--line); border-radius: 24px; background: var(--paper); box-shadow: 0 18px 40px rgba(23,35,31,.06); }
+    .camera-stage { display: grid; place-items: center; min-height: 300px; overflow: hidden; border-radius: 16px; background: #e7e0d2; }
+    #webcam-container canvas, #preview-image { display: block; width: min(100%, 300px); height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 12px; }
+    #preview-image { display: none; }
+    .model-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .model-button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 18px; border: 0; border-radius: 999px; color: #fff; background: var(--green); font: inherit; font-size: .84rem; font-weight: 800; cursor: pointer; transition: transform .2s, background .2s; }
+    .model-button:hover:not(:disabled) { background: #346856; transform: translateY(-2px); }
+    .model-button.secondary { color: var(--green); background: #e7eee8; }
+    .model-button:disabled { cursor: wait; opacity: .55; }
+    .upload-label { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 18px; border-radius: 999px; color: var(--green); background: #e7eee8; font-size: .84rem; font-weight: 800; cursor: pointer; }
+    #image-upload { display: none; }
+    .model-status { min-height: 25px; margin: 16px 0 0; color: var(--muted); font-size: .82rem; }
+    .result { display: none; margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--line); }
+    .result.is-visible { display: block; }
+    .result-title { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 13px; }
+    .result-title strong { color: var(--orange-dark); font-size: 1.6rem; }
+    .result-title span { color: var(--muted); font-size: .85rem; }
+    .confidence-bar { height: 8px; overflow: hidden; border-radius: 99px; background: #e9e5dc; }
+    .confidence-fill { width: 0; height: 100%; border-radius: inherit; background: var(--orange); transition: width .5s ease; }
+    .prediction-list { display: grid; gap: 8px; margin-top: 16px; }
+    .prediction-row { display: grid; grid-template-columns: 1fr auto; gap: 12px; color: var(--muted); font-size: .78rem; }
+    .prediction-row b { color: var(--ink); }
     .hero-note { position: absolute; bottom: 35px; left: 0; color: rgba(255,255,255,.55); font-size: .72rem; letter-spacing: .08em; }
 
     .intro { padding: 105px 0 93px; background: var(--paper); }
@@ -117,6 +148,10 @@
       .hero, .hero-inner { min-height: 730px; }
       .hero-inner { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding-top: 70px; }
       .dino-wrap { width: min(440px, 100%); margin: -4px auto 0; }
+      .animal-orbit { width: min(330px, 100%); height: 330px; margin: 0 auto; }
+      .model-section { padding: 72px 0; }
+      .model-layout { grid-template-columns: 1fr; gap: 34px; }
+      .model-card { padding: 18px; }
       .hero-note { bottom: 22px; }
       .intro, .quotes, .closing { padding: 72px 0; }
       .comments { padding: 72px 0 80px; }
@@ -131,10 +166,10 @@
 <body>
   <header>
     <div class="wrap nav">
-      <a class="brand" href="#"><span class="brand-mark">◒</span> KEEP MOVING</a>
+      <a class="brand" href="#"><span class="brand-mark">🐾</span> ANIMAL FACE</a>
       <nav aria-label="주요 메뉴">
-        <a href="#meaning">WHY TIME</a>
-        <a href="#quotes">QUOTES</a>
+        <a href="#test">TEST</a>
+        <a href="#meaning">ABOUT</a>
       </nav>
     </div>
   </header>
@@ -144,42 +179,58 @@
       <div class="stars" aria-hidden="true"></div>
       <div class="wrap hero-inner">
         <div>
-          <p class="eyebrow">A LITTLE REMINDER FOR TODAY</p>
-          <h1 id="hero-title">시간은<br /><em>지금</em>이다.</h1>
-          <p class="hero-copy">거대한 발자국도 결국 한 걸음에서 시작됩니다. 오늘이라는 선물을, 망설임보다 용기에 사용하세요.</p>
-          <a class="cta" href="#quotes">오늘의 문장 읽기 <span>↓</span></a>
+          <p class="eyebrow">AI ANIMAL FACE TEST</p>
+          <h1 id="hero-title">나는<br /><em>무슨 동물상?</em></h1>
+          <p class="hero-copy">사진 한 장으로 알아보는 나의 동물상. 강아지상일까, 고양이상일까? 지금 바로 확인해보세요.</p>
+          <a class="cta" href="#test">테스트 시작하기 <span>↓</span></a>
         </div>
         <div class="dino-wrap" aria-label="용기를 상징하는 귀여운 초식 공룡 일러스트" role="img">
-          <svg viewBox="0 0 520 420" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <ellipse cx="290" cy="393" rx="174" ry="15" fill="#0a211d" opacity=".45"/>
-            <path d="M102 312C60 292 45 246 61 202c12-34 44-58 84-60 21-2 45 2 70 10 22-35 57-55 98-55 81 0 129 63 114 131-9 42-45 77-90 91-36 11-78 5-113-13-38 30-81 29-122 6z" fill="#79a878"/>
-            <path d="M116 151C73 142 48 111 57 77c8-28 36-41 62-29 18 8 24 26 20 43 31-20 68-17 86 2 15 17 11 39-8 51-25 16-64 16-101 7z" fill="#79a878"/>
-            <path d="M61 202c-7 28-4 58 16 84l-28-13c-19-28-20-64-2-94 11-17 25-28 42-33-14 15-23 34-28 56z" fill="#5f8e6c"/>
-            <path d="M108 294c-16 25-20 51-15 78h36c-3-22 4-43 25-67zM290 312c-5 23-3 42 6 60h37c-11-22-9-44 1-69z" fill="#416c52"/>
-            <path d="M300 99c27-28 70-39 100-22 18 10 28 27 26 45-3 26-29 40-51 32-13-5-21-17-21-31-22 13-45 10-54-4-6-9-6-14 0-20z" fill="#79a878"/>
-            <path d="M323 87c13-20 31-34 56-37 14-2 30 1 40 9-26-2-49 10-63 30z" fill="#5f8e6c"/>
-            <circle cx="378" cy="110" r="5" fill="#17231f"/>
-            <circle cx="380" cy="108" r="1.7" fill="#fff"/>
-            <path d="M401 128c15 7 27 5 38-3-8 18-27 24-43 15" fill="#d95b2a"/>
-            <path d="M407 140c-6 17-5 32 0 43" fill="none" stroke="#416c52" stroke-width="7" stroke-linecap="round"/>
-            <path d="M222 105l-17-34 31 18 9-41 16 47" fill="#f47b42"/>
-            <path d="M92 114c-14-12-17-28-9-42M112 119c-4-17 1-31 13-40" fill="none" stroke="#f4c44d" stroke-width="6" stroke-linecap="round"/>
-            <path d="M162 181c14 10 26 10 39 0M180 207c11 8 23 8 34 0" fill="none" stroke="#416c52" stroke-width="6" stroke-linecap="round"/>
-            <path d="M464 208c16-8 29-21 34-38" fill="none" stroke="#79a878" stroke-width="16" stroke-linecap="round"/>
-            <path d="M471 174l23-16M476 183l26-5" stroke="#f47b42" stroke-width="6" stroke-linecap="round"/>
-          </svg>
+          <div class="animal-orbit">
+            <div class="animal-face">🐶</div>
+          </div>
         </div>
-        <p class="hero-note">EVERY DAY IS A NEW FOOTPRINT · 01</p>
+        <p class="hero-note">ONE PHOTO · TWO POSSIBILITIES · 01</p>
+      </div>
+    </section>
+
+    <section class="model-section" id="test" aria-labelledby="test-title">
+      <div class="wrap model-layout">
+        <div class="model-copy">
+          <p class="section-label">01 — FIND YOUR ANIMAL FACE</p>
+          <h2 id="test-title">카메라를 보고<br /><em>살짝 웃어보세요.</em></h2>
+          <p>웹캠을 켜거나 사진을 업로드하면 AI가 강아지상과 고양이상 중 더 가까운 쪽을 찾아드려요. 결과는 재미로 가볍게 즐겨주세요!</p>
+        </div>
+        <div class="model-card">
+          <div class="camera-stage">
+            <div id="webcam-container"></div>
+            <img id="preview-image" alt="분석할 사진 미리보기" />
+          </div>
+          <div class="model-actions">
+            <button class="model-button" id="start-button" type="button">카메라 시작</button>
+            <label class="upload-label" for="image-upload">사진 업로드</label>
+            <input id="image-upload" type="file" accept="image/*" />
+            <button class="model-button secondary" id="stop-button" type="button" disabled>카메라 끄기</button>
+          </div>
+          <p class="model-status" id="model-status" role="status">모델을 준비하고 카메라를 시작해주세요.</p>
+          <div class="result" id="result" aria-live="polite">
+            <div class="result-title">
+              <strong id="result-name">분석 중</strong>
+              <span id="result-confidence"></span>
+            </div>
+            <div class="confidence-bar"><div class="confidence-fill" id="confidence-fill"></div></div>
+            <div class="prediction-list" id="label-container"></div>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="intro" id="meaning" aria-labelledby="meaning-title">
       <div class="wrap intro-grid">
         <div>
-          <p class="section-label">01 — THE VALUE OF NOW</p>
-          <h2 id="meaning-title">시간은<br />기다려주지 않지만,<br /><em>기회는 오늘도 옵니다.</em></h2>
+          <p class="section-label">02 — ABOUT THE TEST</p>
+          <h2 id="meaning-title">당신의 매력은<br /><em>어떤 모습에</em><br />더 가까울까요?</h2>
         </div>
-        <p class="intro-text">우리는 종종 완벽한 때를 기다립니다. 하지만 시간은 멈춰서 준비할 때가 아니라, <strong>작게라도 시작할 때</strong> 가장 빛납니다. 어제의 후회와 내일의 걱정 사이에서, 지금의 한 걸음을 선택하세요.</p>
+        <p class="intro-text">이 테스트는 Teachable Machine 이미지 모델을 이용해 사진 속 표정을 분석합니다. <strong>강아지상</strong>은 친근하고 밝은 매력이, <strong>고양이상</strong>은 도도하고 신비로운 매력이 돋보인다고 해요. 어떤 결과든 당신만의 분위기입니다.</p>
       </div>
     </section>
 
@@ -187,21 +238,21 @@
       <div class="wrap">
         <div class="quote-head">
           <div>
-            <p class="section-label">02 — WORDS TO KEEP</p>
-            <h2 id="quotes-title">오늘의 발걸음에<br />힘을 더하는 말</h2>
+            <p class="section-label">03 — ANIMAL VIBES</p>
+            <h2 id="quotes-title">강아지상과<br />고양이상의 매력</h2>
           </div>
-          <p>넘어져도 괜찮아요.<br />다시 일어날 이유는 언제나 충분하니까요.</p>
+            <p>당신은 어떤 매력을<br />가지고 있나요?</p>
         </div>
         <div class="quote-grid">
           <article class="quote-card">
             <div class="quote-mark">“</div>
-            <blockquote>미래는 현재 우리가 무엇을 하는가에 달려 있다.</blockquote>
-            <cite>— 마하트마 간디</cite>
+            <blockquote>보기만 해도 기분 좋아지는 친근한 에너지.</blockquote>
+            <cite>— 강아지상</cite>
           </article>
           <article class="quote-card">
             <div class="quote-mark">“</div>
-            <blockquote>성공은 넘어지는 것이 아니라, 넘어질 때마다 일어나는 것이다.</blockquote>
-            <cite>— 넬슨 만델라</cite>
+            <blockquote>차분하지만 시선을 끄는 신비로운 분위기.</blockquote>
+            <cite>— 고양이상</cite>
           </article>
         </div>
       </div>
@@ -209,8 +260,8 @@
 
     <section class="closing">
       <div class="wrap closing-inner">
-        <h2>느리더라도 괜찮습니다.<br />절대, 포기하지 마세요.</h2>
-        <a class="cta" href="#hero-title">다시 시작하기 <span>↑</span></a>
+        <h2>결과가 어떻든 괜찮아요.<br />당신은 충분히 매력적이니까요.</h2>
+        <a class="cta" href="#test">다시 테스트하기 <span>↑</span></a>
       </div>
     </section>
 
@@ -224,6 +275,128 @@
       </div>
     </section>
   </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+  <script>
+    const MODEL_URL = "https://teachablemachine.withgoogle.com/models/EgdZpmGvq/";
+    let model;
+    let webcam;
+    let animationId;
+    let isPredicting = false;
+
+    const startButton = document.getElementById("start-button");
+    const stopButton = document.getElementById("stop-button");
+    const uploadInput = document.getElementById("image-upload");
+    const webcamContainer = document.getElementById("webcam-container");
+    const previewImage = document.getElementById("preview-image");
+    const status = document.getElementById("model-status");
+    const result = document.getElementById("result");
+    const resultName = document.getElementById("result-name");
+    const resultConfidence = document.getElementById("result-confidence");
+    const confidenceFill = document.getElementById("confidence-fill");
+    const labelContainer = document.getElementById("label-container");
+
+    async function loadModel() {
+      if (!model) {
+        status.textContent = "AI 모델을 불러오는 중...";
+        model = await tmImage.load(MODEL_URL + "model.json", MODEL_URL + "metadata.json");
+      }
+    }
+
+    function clearCamera() {
+      if (animationId) cancelAnimationFrame(animationId);
+      animationId = null;
+      isPredicting = false;
+      if (webcam) {
+        webcam.stop();
+        webcam = null;
+      }
+      webcamContainer.replaceChildren();
+      stopButton.disabled = true;
+    }
+
+    function displayPredictions(predictions) {
+      const sorted = [...predictions].sort((a, b) => b.probability - a.probability);
+      const winner = sorted[0];
+      const confidence = Math.round(winner.probability * 100);
+      const lowerName = winner.className.toLowerCase();
+      const isCat = lowerName.includes("cat") || lowerName.includes("고양이");
+      const friendlyName = isCat ? "고양이상" : "강아지상";
+
+      resultName.textContent = friendlyName;
+      resultConfidence.textContent = `${confidence}% 일치`;
+      confidenceFill.style.width = `${confidence}%`;
+      labelContainer.replaceChildren(...sorted.map((prediction) => {
+        const row = document.createElement("div");
+        row.className = "prediction-row";
+        const name = document.createElement("b");
+        name.textContent = prediction.className;
+        const percentage = document.createElement("span");
+        percentage.textContent = `${Math.round(prediction.probability * 100)}%`;
+        row.append(name, percentage);
+        return row;
+      }));
+      result.classList.add("is-visible");
+    }
+
+    async function predictFrame() {
+      if (!webcam || !isPredicting) return;
+      webcam.update();
+      displayPredictions(await model.predict(webcam.canvas));
+      animationId = window.requestAnimationFrame(predictFrame);
+    }
+
+    async function startCamera() {
+      try {
+        startButton.disabled = true;
+        uploadInput.disabled = true;
+        await loadModel();
+        clearCamera();
+        webcam = new tmImage.Webcam(300, 300, true);
+        await webcam.setup();
+        await webcam.play();
+        webcamContainer.appendChild(webcam.canvas);
+        previewImage.style.display = "none";
+        isPredicting = true;
+        stopButton.disabled = false;
+        status.textContent = "카메라를 바라보면 결과가 실시간으로 바뀝니다.";
+        predictFrame();
+      } catch (error) {
+        status.textContent = "카메라를 시작할 수 없습니다. 브라우저 권한을 확인해주세요.";
+        console.error(error);
+      } finally {
+        startButton.disabled = false;
+        uploadInput.disabled = false;
+      }
+    }
+
+    async function predictUploadedImage(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      try {
+        clearCamera();
+        await loadModel();
+        const imageUrl = URL.createObjectURL(file);
+        previewImage.src = imageUrl;
+        previewImage.style.display = "block";
+        await previewImage.decode();
+        status.textContent = "사진을 분석했습니다.";
+        displayPredictions(await model.predict(previewImage));
+        URL.revokeObjectURL(imageUrl);
+      } catch (error) {
+        status.textContent = "사진을 분석하지 못했습니다. 다른 이미지를 사용해주세요.";
+        console.error(error);
+      }
+    }
+
+    startButton.addEventListener("click", startCamera);
+    stopButton.addEventListener("click", () => {
+      clearCamera();
+      status.textContent = "카메라가 꺼졌습니다. 다시 시작하거나 사진을 업로드해보세요.";
+    });
+    uploadInput.addEventListener("change", predictUploadedImage);
+  </script>
 
   <script>
     var disqus_config = function () {
@@ -242,8 +415,8 @@
 
   <footer>
     <div class="wrap footer-inner">
-      <span>KEEP MOVING © 2026</span>
-      <span>ONE STEP AT A TIME</span>
+      <span>ANIMAL FACE © 2026</span>
+      <span>JUST FOR FUN</span>
     </div>
   </footer>
 </body>
