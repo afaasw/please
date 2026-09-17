@@ -103,6 +103,10 @@
     .closing-inner { display: flex; align-items: center; justify-content: space-between; gap: 50px; }
     .closing h2 { max-width: 670px; }
     .closing .cta { flex-shrink: 0; background: var(--green); color: #fff; }
+    .comments { padding: 96px 0 110px; background: var(--paper); }
+    .comments-head { margin-bottom: 42px; }
+    .comments-head h2 { font-size: clamp(2rem, 4vw, 3.2rem); }
+    #disqus_thread { max-width: 760px; }
     footer { padding: 24px 0; color: #83968d; background: var(--ink); font-size: .72rem; }
     .footer-inner { display: flex; justify-content: space-between; gap: 20px; }
 
@@ -115,6 +119,7 @@
       .dino-wrap { width: min(440px, 100%); margin: -4px auto 0; }
       .hero-note { bottom: 22px; }
       .intro, .quotes, .closing { padding: 72px 0; }
+      .comments { padding: 72px 0 80px; }
       .intro-grid { grid-template-columns: 1fr; gap: 32px; }
       .quote-head, .closing-inner { display: block; }
       .quote-head p { margin-top: 20px; }
@@ -208,7 +213,32 @@
         <a class="cta" href="#hero-title">다시 시작하기 <span>↑</span></a>
       </div>
     </section>
+
+    <section class="comments" aria-labelledby="comments-title">
+      <div class="wrap">
+        <div class="comments-head">
+          <p class="section-label">03 — KEEP THE CONVERSATION GOING</p>
+          <h2 id="comments-title">당신의 이야기도<br />들려주세요.</h2>
+        </div>
+        <div id="disqus_thread"></div>
+      </div>
+    </section>
   </main>
+
+  <script>
+    var disqus_config = function () {
+      this.page.url = window.location.href.split("#")[0];
+      this.page.identifier = window.location.pathname || "keep-moving";
+    };
+
+    (function() {
+      var d = document, s = d.createElement("script");
+      s.src = "https://asdd-4.disqus.com/embed.js";
+      s.setAttribute("data-timestamp", +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
   <footer>
     <div class="wrap footer-inner">
